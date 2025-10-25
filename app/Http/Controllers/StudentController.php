@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
@@ -80,12 +81,22 @@ class StudentController extends Controller
 
     public function login(Request $request){
         // validation
-        $request->validate([
-           'email'      => 'required|email|max:100|unique:students,email',
+        $credentials = $request->validate([
+           'email'      => 'required|email|max:100',
             'password'   => 'required',
         ]);
-
+        // return $request->all();
         // auth check
-        
+        if(Auth::guard('student') -> attempt($credentials)){
+            return redirect('/student-profile');
+        }
+
+
+        return back();
+    }
+
+    public function logout(){
+        Auth::guard('student') ->logout();
+        return redirect('/student-login');
     }
 }

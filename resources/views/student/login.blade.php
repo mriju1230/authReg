@@ -5,9 +5,11 @@
       <h3 class="fw-bold text-primary">Student Login</h3>
       <p class="text-muted mb-0">Enter your credentials to access your account</p>
       <hr class="mx-auto mt-3" style="width:80px; height:3px; background:#4364f7; border:none;">
+       @include('components.message')
     </div>
 
     <form action="{{ route('student.login') }}" method="POST">
+      @csrf
       <div class="mb-3">
         <label for="email" class="form-label fw-semibold">Email</label>
         <input type="email" class="form-control" id="email" name="email" placeholder="example@email.com" required>
